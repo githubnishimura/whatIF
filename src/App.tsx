@@ -70,13 +70,13 @@ const CardStatusTable = ({
   const handSet = React.useMemo(() => new Set(hand.map(c => `${c.suit}-${c.rank}`)), [hand]);
   
   return (
-    <div className="glass rounded-2xl p-6 overflow-x-auto">
+    <div className="glass rounded-2xl p-4 overflow-x-auto">
       <div className="flex items-center gap-2 mb-4">
         <LayoutGrid className="w-4 h-4 text-emerald-500" />
         <h2 className="text-xs uppercase tracking-widest font-mono text-zinc-500">Card Tracker</h2>
       </div>
       
-      <div className="min-w-[400px] grid grid-cols-14 gap-1 relative">
+      <div className="min-w-[500px] grid grid-cols-14 gap-1 relative">
         {/* Vertical Highlight Bar */}
         {baseCard && (
           <div 
@@ -275,7 +275,7 @@ export default function App() {
       <main className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* Left Column: Game Board */}
-        <div className="lg:col-span-8 flex flex-col gap-12">
+        <div className="lg:col-span-7 flex flex-col gap-12">
           
           {/* Table Center */}
           <div className="relative flex flex-col items-center justify-center py-12 bg-zinc-900/50 rounded-[3rem] border border-zinc-800/50">
@@ -359,7 +359,7 @@ export default function App() {
         </div>
 
         {/* Right Column: Stats & History */}
-        <div className="lg:col-span-4 flex flex-col gap-6">
+        <div className="lg:col-span-5 flex flex-col gap-6">
           
           <CardStatusTable 
             discarded={discardedSet} 
