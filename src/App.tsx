@@ -67,7 +67,7 @@ const CardStatusTable = ({
   hand: Card[];
   baseCard: Card | null;
 }) => {
-  const handSet = new Set(hand.map(c => `${c.suit}-${c.rank}`));
+  const handSet = React.useMemo(() => new Set(hand.map(c => `${c.suit}-${c.rank}`)), [hand]);
   
   return (
     <div className="glass rounded-2xl p-6 overflow-x-auto">
@@ -122,7 +122,7 @@ const CardStatusTable = ({
               {/* Rank Cells */}
               {RANKS.map(rank => {
                 const cardKey = `${suit}-${rank}`;
-                const isDiscarded = Array.from(discarded).some(d => d.startsWith(cardKey));
+                const isDiscarded = discarded.has(cardKey);
                 const isInHand = handSet.has(cardKey);
                 const isTargetRank = baseCard?.rank === rank;
                 
@@ -185,17 +185,19 @@ export default function App() {
   }, []);
 
   const reshuffleHand = () => {
-    if (reshufflesLeft <= 0 || gameState.deck.length === 0) return;
+    setGameState(prev => {
+      if (reshufflesLeft <= 0 || prev.deck.length === 0) return prev;
 
-    const fullPool = [...gameState.deck, ...gameState.hand];
-    const shuffledPool = shuffle(fullPool);
-    const newHand = shuffledPool.splice(0, 5);
-    const newDeck = shuffledPool;
+      const fullPool = [...prev.deck, ...prev.hand];
+      const shuffledPool = shuffle(fullPool);
+      const newHand = shuffledPool.splice(0, 5);
+      const newDeck = shuffledPool;
 
-    setGameState({
-      ...gameState,
-      hand: newHand,
-      deck: newDeck,
+      return {
+        ...prev,
+        hand: newHand,
+        deck: newDeck,
+      };
     });
     setReshufflesLeft(prev => prev - 1);
     setMessage("Hand reshuffled!");
@@ -217,19 +219,21 @@ export default function App() {
     const card = gameState.hand[index];
     if (!canPlay(card, gameState.baseCard!)) return;
 
-    const newHand = [...gameState.hand];
-    newHand.splice(index, 1);
+    setGameState(prev => {
+      const newHand = [...prev.hand];
+      newHand.splice(index, 1);
 
-    const newDeck = [...gameState.deck];
-    if (newDeck.length > 0) {
-      newHand.push(newDeck.pop()!);
-    }
+      const newDeck = [...prev.deck];
+      if (newDeck.length > 0) {
+        newHand.push(newDeck.pop()!);
+      }
 
-    setGameState({
-      ...gameState,
-      hand: newHand,
-      deck: newDeck,
-      baseCard: card
+      return {
+        ...prev,
+        hand: newHand,
+        deck: newDeck,
+        baseCard: card
+      };
     });
 
     setDiscardedCount(prev => prev + 1);
