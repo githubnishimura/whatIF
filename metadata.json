@@ -1,0 +1,5 @@
+{
+  "name": "What If Solitaire",
+  "description": "A strategic solitaire game where you match suits or ranks to clear the deck. Features a real-time card tracking table.",
+  "requestFramePermissions": []
+}
