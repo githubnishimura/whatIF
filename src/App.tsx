@@ -70,17 +70,17 @@ const CardStatusTable = ({
   const handSet = React.useMemo(() => new Set(hand.map(c => `${c.suit}-${c.rank}`)), [hand]);
   
   return (
-    <div className="glass rounded-2xl p-3 sm:p-4 overflow-x-auto">
-      <div className="flex items-center gap-2 mb-4">
-        <LayoutGrid className="w-4 h-4 text-emerald-500" />
-        <h2 className="text-xs uppercase tracking-widest font-mono text-zinc-500">Card Tracker</h2>
+    <div className="glass rounded-2xl p-3 sm:p-4 overflow-hidden">
+      <div className="flex items-center gap-2 mb-3">
+        <LayoutGrid className="w-3.5 h-3.5 text-emerald-500" />
+        <h2 className="text-[10px] uppercase tracking-widest font-mono text-zinc-500">Card Tracker</h2>
       </div>
       
-      <div className="min-w-[450px] grid grid-cols-14 gap-0.5 sm:gap-1 relative">
+      <div className="w-full grid grid-cols-14 gap-0.5 sm:gap-1 relative">
         {/* Vertical Highlight Bar */}
         {baseCard && (
           <div 
-            className="absolute inset-0 pointer-events-none z-0 grid grid-cols-14 gap-1"
+            className="absolute inset-0 pointer-events-none z-0 grid grid-cols-14 gap-0.5 sm:gap-1"
           >
             <div 
               className="bg-emerald-500/5 border-x border-emerald-500/20 transition-all duration-300"
@@ -90,12 +90,12 @@ const CardStatusTable = ({
         )}
 
         {/* Column Headers */}
-        <div className="w-8"></div>
+        <div className="w-6 sm:w-8"></div>
         {RANKS.map(r => (
           <div 
             key={r} 
             className={`
-              text-[10px] font-mono text-center uppercase transition-colors duration-300 z-10
+              text-[9px] sm:text-[10px] font-mono text-center uppercase transition-colors duration-300 z-10
               ${baseCard?.rank === r ? 'text-emerald-400 font-bold' : 'text-zinc-500'}
             `}
           >
@@ -111,9 +111,9 @@ const CardStatusTable = ({
               {/* Suit Label */}
               <div 
                 className={`
-                  text-center text-lg transition-all duration-300 z-10 flex items-center justify-center
+                  text-center text-base sm:text-lg transition-all duration-300 z-10 flex items-center justify-center
                   ${getSuitColor(suit)} 
-                  ${isTargetSuit ? 'scale-125 font-bold bg-emerald-500/10 rounded-l-sm' : 'opacity-60'}
+                  ${isTargetSuit ? 'scale-110 font-bold bg-emerald-500/10 rounded-l-sm' : 'opacity-60'}
                 `}
               >
                 {suit}
@@ -130,7 +130,7 @@ const CardStatusTable = ({
                   <div 
                     key={rank} 
                     className={`
-                      h-6 rounded-sm flex items-center justify-center transition-all duration-300 relative z-10
+                      h-5 sm:h-6 rounded-sm flex items-center justify-center transition-all duration-300 relative z-10 text-[8px] sm:text-[10px]
                       ${isDiscarded ? 'bg-zinc-800/50 text-zinc-700' : isInHand ? 'bg-amber-500/30 text-amber-400 ring-1 ring-amber-500/50' : 'bg-emerald-500/10 text-emerald-400/40'}
                       ${isTargetSuit ? 'bg-emerald-500/10' : ''}
                       ${isTargetSuit && isTargetRank ? 'ring-2 ring-emerald-500/60 bg-emerald-500/20' : ''}
@@ -247,7 +247,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-8 max-w-[1440px] mx-auto flex flex-col gap-8">
+    <div className="min-h-screen p-4 md:p-8 max-w-[1700px] mx-auto flex flex-col gap-8">
       {/* Header */}
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
